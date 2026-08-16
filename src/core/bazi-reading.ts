@@ -34,14 +34,6 @@ export interface DayunLike {
   endAge: number
 }
 
-export interface LiuNianLike {
-  year: number
-  age: number
-  ganZhi: string
-  gan: string
-  shiShen: string
-}
-
 export interface WuxingCountLike {
   wuxing: string
   count: number
@@ -271,16 +263,6 @@ export function wuxingAdviceText(element: string): string {
   return `${g.symbol}。性格上${g.trait}适合${g.suited}注意：${g.avoid}`
 }
 
-// ---------- 流年提醒（今明两年） ----------
-
-function flowTwo(liuNian: LiuNianLike[], birthYear: number): LiuNianLike[] {
-  const now = new Date().getFullYear()
-  const age = Math.max(0, now - birthYear + 1)
-  const from = liuNian.filter((l) => l.age >= age).sort((a, b) => a.year - b.year)
-  const list = from.length >= 2 ? from.slice(0, 2) : liuNian.slice(-2)
-  return list
-}
-
 // ---------- 总体解读 ----------
 
 export interface ReadingSection {
@@ -290,8 +272,8 @@ export interface ReadingSection {
 }
 
 export function overallReadings(
-  pillars: PillarLike[], wuxing: WuxingCountLike[], daYun: DayunLike[], liuNian: LiuNianLike[],
-  dayGan: string, dayZhi: string, monthZhi: string, birthYear: number,
+  pillars: PillarLike[], wuxing: WuxingCountLike[], daYun: DayunLike[],
+  dayGan: string, dayZhi: string, monthZhi: string,
   genderLabel: string, yunAge: number, forward: boolean
 ): ReadingSection[] {
   const dayWx = GAN_WUXING[dayGan]
@@ -327,8 +309,6 @@ export function overallReadings(
   }).join(' ')
   const dy = daYun.find((d) => d.index === 1)
   const s5 = `${genderLabel}约${yunAge}岁起运，${forward ? '顺行' : '逆行'}。${dy ? `首步大运${dy.ganZhi}，行${dy.startAge}–${dy.endAge}岁。` : ''}运有高低，低时守、高时进。`
-  const flow = flowTwo(liuNian, birthYear)
-  const s6 = flow.map((l) => `${l.year}（${l.ganZhi}，${l.age}岁）行${l.shiShen}：${getShishenGuide(l.shiShen)?.meaning ?? ''}`).join('；')
 
   return [
     { title: '命主画像', text: s1, source: '《渊海子平》' },
@@ -336,7 +316,6 @@ export function overallReadings(
     { title: '五行格局与天赋短板', text: `五行分布${sXiangzi}${s2}`, source: '《三命通会》' },
     { title: '方向与相处建议', text: s3, source: '《三命通会》' },
     { title: '四柱各安其位', text: pillarLines, source: '《渊海子平·十二宫》' },
-    { title: '大运走势概览', text: s5, source: '《渊海子平·论大运》' },
-    { title: '眼前这两年', text: s6 || '流年平稳过渡，按部就班即可。', source: '《渊海子平·论流年》' }
+    { title: '大运走势概览', text: s5, source: '《渊海子平·论大运》' }
   ]
 }

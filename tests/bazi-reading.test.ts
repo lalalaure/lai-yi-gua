@@ -4,14 +4,14 @@ import { paiPan } from '../src/core/bazi'
 describe('八字白话解读', () => {
   const pan = paiPan({ year: 1986, month: 5, day: 29, hour: 1 }, 1)
 
-  it('总体解读七段齐全且都附出处', () => {
-    expect(pan.readings.length).toBe(7)
+  it('总体解读六段齐全且都附出处', () => {
+    expect(pan.readings.length).toBe(6)
     const titles = pan.readings.map((r) => r.title)
     expect(titles).toContain('命主画像')
     expect(titles).toContain('格局成否')
     expect(titles).toContain('五行格局与天赋短板')
     expect(titles).toContain('大运走势概览')
-    expect(titles).toContain('眼前这两年')
+    expect(titles).not.toContain('眼前这两年')
     for (const r of pan.readings) {
       expect(r.text.length).toBeGreaterThan(10)
       expect(r.source.length).toBeGreaterThan(0)

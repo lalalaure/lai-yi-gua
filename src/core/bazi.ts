@@ -299,11 +299,9 @@ export function paiPan(input: { year: number; month: number; day: number; hour: 
       raw.pillars,
       wuxing,
       raw.daYun,
-      raw.liuNian,
       raw.dayGan,
       raw.dayZhi,
       raw.monthZhi,
-      input.year,
       gender.label,
       raw.yunAge,
       raw.forward
