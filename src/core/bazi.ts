@@ -16,6 +16,7 @@ import {
   type WuxingBoard,
   type ReadingSection
 } from './bazi-reading'
+import { gejuOf, type GejuResult } from './geju'
 
 export interface Gender {
   sex: 1 | 0 // 1男 0女
@@ -82,6 +83,8 @@ export interface BaziPan {
   wuxingBoard: WuxingBoard
   /** 五行力量强弱（供界面高亮） */
   xiJi: { strong: boolean; xi: string[]; ji: string[] }
+  /** 格局判断（子平法） */
+  geju: GejuResult
   conclusion: string
   readings: ReadingSection[]
 }
@@ -266,6 +269,7 @@ export function paiPan(input: { year: number; month: number; day: number; hour: 
   const l = s.getLunar()
 
   const xiJi = determineXiJi(raw.pillars, raw.dayGan, raw.dayZhi, raw.monthZhi)
+  const geju = gejuOf(raw.pillars, raw.dayGan, raw.monthZhi)
 
   return {
     solar: s.toYmdHms(),
@@ -289,6 +293,7 @@ export function paiPan(input: { year: number; month: number; day: number; hour: 
     pillarExplains: pillarExplains(raw.pillars, raw.dayGan),
     wuxingBoard: wuxingBoard(wuxing, xiJi.xi),
     xiJi,
+    geju,
     conclusion: buildConclusion(wuxing, raw),
     readings: overallReadings(
       raw.pillars,

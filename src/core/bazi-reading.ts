@@ -9,6 +9,7 @@ import { SHENG, KE, GAN_WUXING, ZHI_WUXING, ZHI_HIDEGAN, wangXiangFor, type Wuxi
 import { getWuxingGuide } from '@/data/wuxing-guide'
 import { getShishenGuide } from '@/data/shishen-guide'
 import { getPillarGuide } from '@/data/pillar-guide'
+import { gejuOf, type GejuResult } from './geju'
 
 const GAN = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
 const YANG = [true, false, true, false, true, false, true, false, true, false]
@@ -302,6 +303,10 @@ export function overallReadings(
   const missing = ALL_WX.filter((w) => !present.has(w))
   const strongestG = getWuxingGuide(strongestW.wuxing)
 
+  // 格局判断（子平法：月令为纲）
+  const geju: GejuResult = gejuOf(pillars, dayGan, monthZhi)
+  const gejuText = `格局为「${geju.name}」${geju.cheng ? '，成格' : '，未成格'}。${geju.basis}${geju.poReason ? `破格：${geju.poReason}` : ''}${geju.trait ? `此格局之人：${geju.trait}` : ''}`
+
   const s1 = `你是「${dayGan}日主」，属${dayWx}。${dayG ? dayG.trait : ''}五行以${strongestW.wuxing}为最强${strongestG ? `：${strongestG.trait}` : ''}。${strong ? '日主有力，行事多凭自己主张，敢作敢当。' : '日主偏柔，更倾向借力而行、顺势而为。'}`
   const s2 =
     missing.length === 0
@@ -327,6 +332,7 @@ export function overallReadings(
 
   return [
     { title: '命主画像', text: s1, source: '《渊海子平》' },
+    { title: '格局成否', text: gejuText, source: '《渊海子平·论格局》《子平真诠》' },
     { title: '五行格局与天赋短板', text: `五行分布${sXiangzi}${s2}`, source: '《三命通会》' },
     { title: '方向与相处建议', text: s3, source: '《三命通会》' },
     { title: '四柱各安其位', text: pillarLines, source: '《渊海子平·十二宫》' },

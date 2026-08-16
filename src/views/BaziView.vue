@@ -214,6 +214,22 @@ function getWxTrait(wx: string): string {
           <h3 class="shensha__title">入命神煞</h3>
           <span v-for="s in pan.shenSha" :key="s" class="shensha__chip">{{ s }}</span>
         </div>
+
+        <!-- 格局成否 -->
+        <div class="geju reveal">
+          <h3 class="geju__title">格局成否
+            <span class="faint">子平法 · 以月令为纲，出《渊海子平·论格局》《子平真诠》</span>
+          </h3>
+          <div class="geju__head">
+            <span class="geju__name">{{ pan.geju.name }}</span>
+            <span class="geju__badge" :class="pan.geju.cheng ? 'is-cheng' : 'is-po'">{{ pan.geju.cheng ? '成格' : '未成格' }}</span>
+          </div>
+          <p class="geju__basis">{{ pan.geju.basis }}</p>
+          <p v-if="pan.geju.poReason" class="geju__po">{{ pan.geju.poReason }}</p>
+          <p v-if="pan.geju.oneLiner" class="geju__one">{{ pan.geju.oneLiner }}</p>
+          <p v-if="pan.geju.trait" class="geju__trait"><b>此格局之人：</b>{{ pan.geju.trait }}</p>
+          <p v-if="pan.geju.advice" class="geju__advice"><b>发挥建议：</b>{{ pan.geju.advice }}</p>
+        </div>
       </section>
 
       <!-- 总体解读（读势） -->
@@ -704,6 +720,81 @@ function getWxTrait(wx: string): string {
   color: var(--cinnabar);
   font-size: 13px;
   background: rgba(176, 58, 46, 0.05);
+}
+
+.geju {
+  margin-top: 24px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: linear-gradient(135deg, rgba(176, 58, 46, 0.04), rgba(176, 58, 46, 0.01));
+}
+.geju__title {
+  font-size: 15px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.geju__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.geju__name {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--cinnabar);
+}
+.geju__badge {
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.geju__badge.is-cheng {
+  background: rgba(46, 125, 50, 0.12);
+  color: #2e7d32;
+  border: 1px solid rgba(46, 125, 50, 0.35);
+}
+.geju__badge.is-po {
+  background: rgba(176, 58, 46, 0.1);
+  color: var(--cinnabar);
+  border: 1px solid var(--cinnabar-soft);
+}
+.geju__basis {
+  font-size: 14.5px;
+  line-height: 1.9;
+  color: var(--ink-soft);
+}
+.geju__po {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--cinnabar);
+  background: rgba(176, 58, 46, 0.06);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+.geju__one {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.geju__trait,
+.geju__advice {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ink-soft);
+}
+.geju__trait b,
+.geju__advice b {
+  color: var(--ink);
 }
 
 .reads {
