@@ -1,0 +1,181 @@
+/* ============================================================
+   来一卦 · 水墨丹青主题系统
+   ============================================================ */
+
+:root {
+  /* 色板 —— 宣纸米白 / 墨 / 淡灰 / 朱砂点睛 */
+  --paper: #f3efe6;
+  --paper-deep: #ebe4d6;
+  --paper-mist: #faf7f0;
+  --ink: #1a1816;
+  --ink-soft: #4a453f;
+  --ink-faint: #8a8378;
+  --cinnabar: #b03a2e;
+  --cinnabar-soft: #c96a5c;
+  --gold: #a8842c;
+  --line: rgba(26, 24, 22, 0.14);
+
+  /* 字体 */
+  --font-body: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'SimSun', serif;
+  --font-title: 'ZCOOL XiaoWei', 'Noto Serif SC', 'Kaiti SC', 'KaiTi', serif;
+  --font-accent: 'Ma Shan Zheng', 'Xingkai SC', 'KaiTi', cursive;
+
+  /* 布局 */
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow-soft: 0 2px 10px rgba(26, 24, 22, 0.06);
+  --shadow-ink: 0 6px 24px rgba(26, 24, 22, 0.09);
+  --shadow-ink-lg: 0 14px 44px rgba(26, 24, 22, 0.14);
+  --shadow-cinnabar: 0 10px 28px rgba(176, 58, 46, 0.2);
+
+  /* 金线 / 高光 */
+  --gold-line: rgba(168, 132, 44, 0.4);
+  --gold-soft: rgba(168, 132, 44, 0.14);
+  --highlight: rgba(255, 255, 255, 0.5);
+
+  /* 缓动 */
+  --ease-ink: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-flip: cubic-bezier(0.34, 1.4, 0.5, 1);
+  --ease-drop: cubic-bezier(0.6, -0.28, 0.28, 1.2);
+}
+
+/* 焦点可见环 */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--cinnabar-soft);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #1c1a17;
+    --paper-deep: #14120f;
+    --paper-mist: #24211d;
+    --ink: #e8e2d6;
+    --ink-soft: #b3ab9d;
+    --ink-faint: #7d7669;
+    --line: rgba(232, 226, 214, 0.14);
+    --shadow-ink: 0 6px 24px rgba(0, 0, 0, 0.4);
+    --shadow-ink-lg: 0 14px 44px rgba(0, 0, 0, 0.5);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--paper);
+  color: var(--ink);
+  line-height: 1.7;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse at 20% -10%, rgba(176, 58, 46, 0.05), transparent 55%),
+    radial-gradient(ellipse at 100% 0%, rgba(168, 132, 44, 0.05), transparent 45%),
+    linear-gradient(180deg, rgba(168, 132, 44, 0.03), transparent 40%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  transition: background-color 0.6s var(--ease-ink), color 0.6s var(--ease-ink);
+}
+
+/* 宣纸纹理（极淡） */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(rgba(26, 24, 22, 0.035) 0.6px, transparent 0.8px);
+  background-size: 14px 14px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-title);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: rgba(176, 58, 46, 0.18);
+}
+
+/* 面板公共润色：上缘金线高光 + 顶光（各视图.scoped .panel 仅提供布局） */
+.panel {
+  position: relative;
+}
+.panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 22px;
+  right: 22px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-line) 25%, var(--gold-line) 75%, transparent);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.panel::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(var(--radius) - 1px);
+  box-shadow: inset 0 1px 0 var(--highlight);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* 视线滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

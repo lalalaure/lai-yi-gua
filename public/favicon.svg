@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a2622"/>
+      <stop offset="100%" stop-color="#15120f"/>
+    </linearGradient>
+  </defs>
+  <!-- 纸上印章 -->
+  <rect width="48" height="48" rx="9" fill="#f3efe6"/>
+  <rect x="2.5" y="2.5" width="43" height="43" rx="7.5" fill="none" stroke="#a8842c" stroke-width="1.5" opacity="0.6"/>
+  <!-- 朱砂底 -->
+  <rect x="8" y="8" width="32" height="32" rx="5" fill="#b03a2e" opacity="0.95"/>
+  <!-- 来：外框 -->
+  <rect x="9.6" y="9.6" width="28.8" height="28.8" rx="3.6" fill="none" stroke="#f3efe6" stroke-width="1.6" opacity="0.9"/>
+  <!-- 来：笔画（白文） -->
+  <g stroke="#f3efe6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 17h16" stroke-width="3"/>
+    <path d="M24 17q7 2 7 7.5 0 5.5-7 7.5-7-2-7-7.5 0-5.5 7-7.5" stroke-width="3"/>
+    <path d="M19 16.5v3M29 16.5v3" stroke-width="2.4"/>
+    <path d="M14.5 27.5q3 1.5 9.5 1.5t9.5-1.5" stroke-width="2.6"/>
+  </g>
+</svg>
