@@ -7,9 +7,9 @@
   --paper: #f3efe6;
   --paper-deep: #ebe4d6;
   --paper-mist: #faf7f0;
-  --ink: #1a1816;
-  --ink-soft: #4a453f;
-  --ink-faint: #8a8378;
+  --ink: #332b24;
+  --ink-soft: #655a50;
+  --ink-faint: #958a7e;
   --cinnabar: #b03a2e;
   --cinnabar-soft: #c96a5c;
   --gold: #a8842c;
@@ -33,6 +33,18 @@
   --gold-soft: rgba(168, 132, 44, 0.14);
   --highlight: rgba(255, 255, 255, 0.5);
 
+  /* 交互语义：朱砂只表示当前、确认与关键结论 */
+  --state-selected: rgba(176, 58, 46, 0.08);
+  --state-selected-strong: rgba(176, 58, 46, 0.16);
+  --state-disabled: 0.48;
+
+  /* 五行辅助色：低饱和，只用于解释，不抢朱砂结论 */
+  --wx-wood: #62896d;
+  --wx-fire: #bd6652;
+  --wx-earth: #a88956;
+  --wx-metal: #8b8d83;
+  --wx-water: #5b7890;
+
   /* 缓动 */
   --ease-ink: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-flip: cubic-bezier(0.34, 1.4, 0.5, 1);
@@ -44,20 +56,6 @@
   outline: 2px solid var(--cinnabar-soft);
   outline-offset: 2px;
   border-radius: 4px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #1c1a17;
-    --paper-deep: #14120f;
-    --paper-mist: #24211d;
-    --ink: #e8e2d6;
-    --ink-soft: #b3ab9d;
-    --ink-faint: #7d7669;
-    --line: rgba(232, 226, 214, 0.14);
-    --shadow-ink: 0 6px 24px rgba(0, 0, 0, 0.4);
-    --shadow-ink-lg: 0 14px 44px rgba(0, 0, 0, 0.5);
-  }
 }
 
 *,
@@ -134,6 +132,24 @@ img, svg {
 .panel {
   position: relative;
 }
+.panel.result {
+  background:
+    linear-gradient(135deg, rgba(168, 132, 44, 0.055), transparent 30%),
+    var(--paper-mist);
+}
+.result__badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 3px 9px;
+  border-left: 2px solid var(--cinnabar);
+  background: var(--state-selected);
+  letter-spacing: 0.12em;
+}
+.result__conclusion {
+  border-left: 3px solid var(--cinnabar);
+  padding-left: 16px;
+}
 .panel::before {
   content: '';
   position: absolute;
@@ -177,5 +193,14 @@ img, svg {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-inline: 16px;
+  }
+  .panel.result {
+    background: var(--paper-mist);
   }
 }

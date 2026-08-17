@@ -105,4 +105,26 @@ const cls = (i: number) => ({
 .guide__desc {
   font-size: 12.5px;
 }
+
+@media (max-width: 640px) {
+  .guide {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .guide__item {
+    padding: 10px 12px;
+  }
+  .guide__rail {
+    top: auto;
+    bottom: -9px;
+    left: 28px;
+    right: auto;
+    width: 2px;
+    height: 10px;
+    background: linear-gradient(to bottom, var(--cinnabar), transparent);
+  }
+  .guide__item:not(:last-child).is-on .guide__rail {
+    opacity: 1;
+  }
+}
 </style>

@@ -93,7 +93,7 @@ const guideLines = computed(
 </script>
 
 <template>
-  <svg :viewBox="`0 0 ${W} ${H}`" class="linechart" role="img" aria-label="走势折线图">
+  <svg :viewBox="`0 0 ${W} ${H}`" class="linechart" :class="{ 'is-in': inView }" role="img" aria-label="走势折线图">
     <defs>
       <linearGradient id="chartArea" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stop-color="var(--cinnabar)" stop-opacity="0.22" />
@@ -108,7 +108,7 @@ const guideLines = computed(
       </g>
     </g>
 
-    <path class="linechart__area" :class="{ 'is-in': inView }" :d="area" />
+    <path class="linechart__area" :class="{ 'is-in': inView }" :d="area" fill="url(#chartArea)" />
 
     <path
       class="linechart__line"
@@ -137,13 +137,14 @@ const guideLines = computed(
 <style scoped>
 .linechart {
   width: 100%;
-  min-width: 420px;
+  min-width: 0;
   height: auto;
   display: block;
 }
 .linechart__guides line {
   stroke: var(--line);
-  stroke-width: 1;
+  stroke-width: 0.8;
+  stroke-dasharray: 3 4;
 }
 .linechart__guides text {
   fill: var(--ink-faint);
@@ -157,7 +158,7 @@ const guideLines = computed(
 }
 .linechart__line {
   fill: none;
-  stroke-width: 2.4;
+  stroke-width: 2.2;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-dasharray: 1600;

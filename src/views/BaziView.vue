@@ -181,7 +181,7 @@ function getWxTrait(wx: string): string {
             <li v-for="w in pan.wuxing" :key="w.wuxing" class="bar">
               <span class="bar__name">{{ w.wuxing }}</span>
               <span class="bar__track">
-                <span class="bar__fill" :style="{ width: (w.count / Math.max(1, pan.wuxing[0].count)) * 100 + '%' }"></span>
+                <span class="bar__fill" :class="`bar--${w.wuxing}`" :style="{ width: (w.count / Math.max(1, pan.wuxing[0].count)) * 100 + '%' }"></span>
               </span>
               <span class="bar__val">{{ w.count }}</span>
             </li>
@@ -601,8 +601,13 @@ function getWxTrait(wx: string): string {
   display: block;
   height: 100%;
   border-radius: 5px;
-  background: var(--cinnabar);
+  background: var(--wx-earth);
 }
+.bar--木 { background: var(--wx-wood); }
+.bar--火 { background: var(--wx-fire); }
+.bar--土 { background: var(--wx-earth); }
+.bar--金 { background: var(--wx-metal); }
+.bar--水 { background: var(--wx-water); }
 .bar__val {
   width: 18px;
   text-align: right;

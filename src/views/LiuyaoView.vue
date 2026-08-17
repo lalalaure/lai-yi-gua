@@ -150,6 +150,11 @@ function smallBar(l: { yin: boolean; moving?: boolean }) {
     <!-- 第二步：摇卦六次 -->
     <section v-if="step === 2" class="panel">
       <h2 class="panel__title">三枚铜钱掷六次</h2>
+      <div class="toss-progress" aria-live="polite">
+        <div class="toss-progress__head"><span>起卦进度</span><strong>第 {{ Math.min(tossCount + 1, 6) }} / 6 爻</strong></div>
+        <div class="toss-progress__track"><span :style="{ width: `${(tossCount / 6) * 100}%` }"></span></div>
+        <p class="toss-progress__hint">{{ ready ? '六爻齐备，可以查看断语。' : `还需掷 ${6 - tossCount} 次，铜钱落定后爻画会写入卦位。` }}</p>
+      </div>
       <CastScene @tossed="onTossed" @clear="clearTosses" />
       <div class="panel__foot">
         <p class="panel__hint faint">每掷一爻，铜钱落定后爻画便写入卦位。六爻齐后即可请断语。</p>
@@ -454,6 +459,41 @@ function smallBar(l: { yin: boolean; moving?: boolean }) {
   border-bottom: 1px solid var(--line);
   margin-bottom: 22px;
 }
+.toss-progress {
+  margin: -2px 0 18px;
+  padding: 12px 14px;
+  border-left: 2px solid var(--cinnabar);
+  background: rgba(176, 58, 46, 0.045);
+}
+.toss-progress__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+.toss-progress__head strong {
+  color: var(--cinnabar);
+  font-family: var(--font-title);
+  font-weight: 500;
+}
+.toss-progress__track {
+  height: 3px;
+  margin-top: 9px;
+  overflow: hidden;
+  background: var(--line);
+}
+.toss-progress__track span {
+  display: block;
+  height: 100%;
+  background: var(--cinnabar);
+  transition: width 0.45s var(--ease-ink);
+}
+.toss-progress__hint {
+  margin-top: 6px;
+  color: var(--ink-faint);
+  font-size: 12px;
+}
 .board__title {
   font-size: 19px;
   margin-bottom: 12px;
@@ -548,25 +588,23 @@ function smallBar(l: { yin: boolean; moving?: boolean }) {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  align-items: flex-start;
+  align-items: center;
   margin-top: 12px;
 }
 .sbar {
   width: 92px;
   height: 6px;
-  border-radius: 2px;
+  border-radius: 3px;
   background: var(--ink);
 }
 .sbar--yin {
-  background: transparent;
-  border-top: 6px solid var(--ink);
-  height: 0;
+  background: linear-gradient(to right, var(--ink) 0 40%, transparent 40% 60%, var(--ink) 60% 100%);
 }
 .sbar--move {
-  background-color: var(--cinnabar);
+  background: linear-gradient(to right, var(--cinnabar) 0 100%);
 }
 .sbar--yin.sbar--move {
-  border-color: var(--cinnabar);
+  background: linear-gradient(to right, var(--cinnabar) 0 40%, transparent 40% 60%, var(--cinnabar) 60% 100%);
 }
 .tri__note {
   font-size: 12.5px;
@@ -722,6 +760,12 @@ function smallBar(l: { yin: boolean; moving?: boolean }) {
   .najia th,
   .najia td {
     padding: 7px 4px;
+  }
+  .toss-progress__head {
+    font-size: 12.5px;
+  }
+  .toss-progress__hint {
+    line-height: 1.6;
   }
 }
 </style>

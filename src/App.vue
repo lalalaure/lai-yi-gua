@@ -41,22 +41,22 @@ onBeforeUnmount(() => {
     <aside class="masthead" aria-hidden="true"></aside>
     <header class="topbar" :class="{ 'is-scrolled': scrolled }">
       <nav class="topbar__inner">
-        <router-link to="/" class="brand">
+            <router-link to="/" class="brand" exact-active-class="brand--active">
           <span class="brand__seal">來</span>
           <span class="brand__name">来一卦</span>
         </router-link>
         <ul class="nav">
           <li>
-            <router-link to="/bazi" class="nav__link">八字</router-link>
+            <router-link to="/bazi" class="nav__link" active-class="nav__link--active">八字</router-link>
           </li>
           <li>
-            <router-link to="/liuyao" class="nav__link">六爻</router-link>
+            <router-link to="/liuyao" class="nav__link" active-class="nav__link--active">六爻</router-link>
           </li>
           <li>
-            <router-link to="/meihua" class="nav__link">梅花</router-link>
+            <router-link to="/meihua" class="nav__link" active-class="nav__link--active">梅花</router-link>
           </li>
           <li>
-            <router-link to="/heritage" class="nav__link">传承志</router-link>
+            <router-link to="/heritage" class="nav__link" active-class="nav__link--active">传承志</router-link>
           </li>
         </ul>
         <button
@@ -170,7 +170,7 @@ onBeforeUnmount(() => {
   color: var(--ink);
   background: rgba(26, 24, 22, 0.05);
 }
-.nav__link.router-link-active {
+.nav__link--active {
   color: var(--cinnabar);
   background: rgba(176, 58, 46, 0.08);
 }
@@ -245,12 +245,20 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 640px) {
+  .topbar__inner {
+    padding-inline: 16px;
+    gap: 8px;
+  }
+  .nav {
+    gap: 0;
+  }
   .brand__name {
     display: none;
   }
   .nav__link {
-    padding: 8px 10px;
-    font-size: 14px;
+    padding: 8px 7px;
+    font-size: 13px;
+    letter-spacing: 0.06em;
   }
 }
 </style>

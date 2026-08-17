@@ -128,11 +128,11 @@ const shengPaths = [
 ]
 /** 相克路径（隔一） */
 const kePaths = [
-  'M140,34 Q202,120 202,236',
-  'M241,121 Q140,250 78,236',
-  'M202,236 Q39,180 39,121',
-  'M78,236 Q140,60 140,34',
-  'M39,121 Q180,-10 140,34'
+  'M140,34 L202,236',
+  'M241,121 L78,236',
+  'M202,236 L39,121',
+  'M78,236 L140,34',
+  'M39,121 L241,121'
 ]
 /** 相克目标：0木→2土、1火→3金、2土→4水、3金→0木、4水→1火 */
 const keTarget = [2, 3, 4, 0, 1]
@@ -149,11 +149,11 @@ const TIYONG = {
 
 // ---- SVG：六亲关系（五角） ----
 const LIUQIN_POS = [
-  { name: '父母', y: 30 },
-  { name: '兄弟', y: 70 },
-  { name: '子孙', y: 110 },
-  { name: '妻财', y: 150 },
-  { name: '官鬼', y: 190 }
+  { name: '父母', x: 160, y: 28 },
+  { name: '兄弟', x: 282, y: 82 },
+  { name: '子孙', x: 236, y: 194 },
+  { name: '妻财', x: 84, y: 194 },
+  { name: '官鬼', x: 38, y: 82 }
 ]
 </script>
 
@@ -264,16 +264,21 @@ const LIUQIN_POS = [
           </div>
 
           <!-- 六亲关系 -->
-          <svg v-if="l.id === 'liuqin'" viewBox="0 0 320 220" role="img" :aria-label="l.name">
+          <svg v-if="l.id === 'liuqin'" viewBox="0 0 320 240" role="img" :aria-label="l.name">
+            <defs>
+              <marker id="liuqinArrow" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 z" fill="var(--cinnabar)" />
+              </marker>
+            </defs>
             <g text-anchor="middle" font-size="13">
               <!-- 中心：宫五行=我 -->
-              <circle cx="160" cy="110" r="34" fill="rgba(176,58,46,0.12)" stroke="var(--cinnabar)" stroke-width="1.4" />
-              <text x="160" y="108" fill="var(--cinnabar)" font-size="15" font-weight="600">宫五行</text>
-              <text x="160" y="126" fill="var(--cinnabar)" font-size="11">＝ 我</text>
+              <circle cx="160" cy="116" r="36" fill="rgba(176,58,46,0.08)" stroke="var(--cinnabar)" stroke-width="1.4" />
+              <text x="160" y="114" fill="var(--cinnabar)" font-size="15" font-weight="600">宫五行</text>
+              <text x="160" y="132" fill="var(--cinnabar)" font-size="11">＝ 我</text>
               <g v-for="q in LIUQIN_POS" :key="q.name">
-                <line :x1="160" :y1="110" :x2="160" :y2="q.y" stroke="var(--line)" stroke-width="1" />
-                <rect :x="160 - 38" :y="q.y - 13" width="76" height="26" rx="13" fill="var(--paper)" stroke="var(--ink-soft)" stroke-width="1" />
-                <text x="160" :y="q.y + 4" fill="var(--ink)">{{ q.name }}</text>
+                <line x1="160" y1="116" :x2="q.x" :y2="q.y" stroke="var(--line)" stroke-width="1" marker-end="url(#liuqinArrow)" />
+                <circle :cx="q.x" :cy="q.y" r="25" fill="var(--paper)" stroke="var(--ink-soft)" stroke-width="1" />
+                <text :x="q.x" :y="q.y + 5" fill="var(--ink)">{{ q.name }}</text>
               </g>
             </g>
           </svg>
@@ -354,8 +359,8 @@ const LIUQIN_POS = [
   justify-content: space-between;
   width: 54px;
   padding: 14px 6px;
-  background: linear-gradient(160deg, #1a1816, #3a3126);
-  color: #efe9dc;
+  background: linear-gradient(160deg, #80634b, #604a38);
+  color: #fff8ea;
 }
 .shelf__abbr {
   font-family: var(--font-title);
@@ -368,7 +373,7 @@ const LIUQIN_POS = [
 }
 .shelf__era {
   font-size: 10.5px;
-  color: #cbbda7;
+  color: #ead8bb;
 }
 .shelf__body {
   flex: 1;
@@ -466,7 +471,7 @@ const LIUQIN_POS = [
   margin: 0 auto;
   display: block;
 }
-.lesson svg[viewBox="0 0 320 220"] {
+.lesson svg[viewBox="0 0 320 240"] {
   width: 100%;
   max-width: 340px;
   margin: 0 auto;
@@ -517,9 +522,7 @@ const LIUQIN_POS = [
   background: var(--ink);
 }
 .tiyong-demo__bar--yin {
-  background: transparent;
-  border-top: 5px solid var(--ink);
-  height: 0;
+  background: linear-gradient(to right, var(--ink) 0 40%, transparent 40% 60%, var(--ink) 60% 100%);
 }
 .tiyong-demo__bar.is-move {
   background-color: var(--cinnabar);

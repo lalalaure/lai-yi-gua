@@ -7,6 +7,12 @@ const router = useRouter()
 
 const selected = methods.filter((m) => m.available)
 const awaiting = methods.filter((m) => !m.available)
+const methodFocus: Record<MethodMeta['id'], string> = {
+  bazi: '看一生',
+  liuyao: '断一事',
+  meihua: '察一念',
+  liuren: '择一方'
+}
 
 useReveal()
 
@@ -41,6 +47,14 @@ function goDirect(m: MethodMeta) {
         <div class="hero__seal-row">
           <span class="seal">透明推演</span>
           <span class="seal">有据可查</span>
+        </div>
+        <div class="hero__actions">
+          <p class="hero__actions-label">从一门占法开始</p>
+          <div class="hero__quick" aria-label="快速选择占法">
+            <button v-for="m in selected" :key="m.id" class="hero__quick-item" @click="goDirect(m)">
+              <b>{{ methodFocus[m.id] }}</b><span>{{ m.name }}</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -85,6 +99,7 @@ function goDirect(m: MethodMeta) {
           <div class="method-card__head">
             <span class="method-card__tag">{{ m.tagline }}</span>
             <h3 class="method-card__name">{{ m.name }}</h3>
+            <strong class="method-card__focus">{{ methodFocus[m.id] }}</strong>
             <span class="method-card__motto">{{ m.motto }}</span>
           </div>
           <div class="method-card__body">
@@ -204,6 +219,68 @@ function goDirect(m: MethodMeta) {
   justify-content: center;
   gap: 16px;
 }
+.hero__actions {
+  margin: 30px auto 0;
+  max-width: 460px;
+}
+.hero__actions-label {
+  margin-bottom: 10px;
+  color: var(--ink-faint);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+}
+.hero__primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  padding: 13px 20px 13px 24px;
+  border: 1px solid var(--cinnabar);
+  border-radius: 6px;
+  background: var(--cinnabar);
+  color: #faf7f0;
+  font-family: var(--font-title);
+  font-size: 17px;
+  letter-spacing: 0.08em;
+  box-shadow: var(--shadow-cinnabar);
+  transition: transform 0.3s var(--ease-ink), box-shadow 0.3s var(--ease-ink), background 0.3s;
+}
+.hero__primary span {
+  padding-left: 16px;
+  border-left: 1px solid rgba(250, 247, 240, 0.45);
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+.hero__primary:hover {
+  transform: translateY(-2px);
+  background: var(--cinnabar-soft);
+  box-shadow: 0 14px 32px rgba(176, 58, 46, 0.25);
+}
+.hero__quick {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.hero__quick-item {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 5px 10px;
+  color: var(--ink-faint);
+  font-size: 12px;
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s, border-color 0.25s;
+}
+.hero__quick-item b {
+  color: var(--ink-soft);
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 500;
+}
+.hero__quick-item:hover {
+  color: var(--cinnabar);
+  border-color: var(--cinnabar);
+}
 
 /* ---------- Routing ---------- */
 .routing__grid {
@@ -313,6 +390,15 @@ function goDirect(m: MethodMeta) {
   letter-spacing: 0.2em;
   margin-bottom: 8px;
 }
+.method-card__focus {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--cinnabar);
+  font-family: var(--font-title);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
 .method-card__motto {
   font-size: 14px;
   color: var(--ink-faint);
@@ -413,6 +499,23 @@ function goDirect(m: MethodMeta) {
   }
   .hero {
     padding-top: 40px;
+  }
+  .hero__actions {
+    margin-top: 24px;
+  }
+  .hero__primary {
+    width: 100%;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .hero__quick {
+    gap: 2px;
+  }
+  .hero__quick-item {
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    padding-inline: 8px;
   }
 }
 </style>

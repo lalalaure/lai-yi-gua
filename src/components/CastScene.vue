@@ -123,23 +123,25 @@ function clearAll() {
           :key="c.id"
           class="coin3d"
           :class="[`coin3d--${c.face}`, { 'is-landed': c.landed, 'is-flying': tossing }]"
-          :style="{ '--d': c.delay + 'ms', '--face': c.face === 'zi' ? '180deg' : '0deg' }"
+          :style="{ '--d': c.delay + 'ms', '--face': c.face === 'zi' ? '180deg' : '0deg', '--drift': `${(c.variant - 1) * 7}px`, '--spin': `${c.variant * 90}deg` }"
         >
           <div class="coin3d__inner">
             <!-- 字面：乾隆通宝 -->
             <div class="coin3d__face coin3d__face--zi">
               <svg viewBox="0 0 100 100" class="coin3d__svg" aria-hidden="true">
                 <defs>
-                  <radialGradient id="coinBr" cx="35%" cy="30%" r="85%">
+                  <radialGradient :id="`coinBr-${c.id}`" cx="35%" cy="30%" r="85%">
                     <stop offset="0%" stop-color="#f5e3ad" />
                     <stop offset="45%" stop-color="#cfa049" />
                     <stop offset="80%" stop-color="#8a5c1f" />
                     <stop offset="100%" stop-color="#4d2f0b" />
                   </radialGradient>
                 </defs>
-                <circle cx="50" cy="50" r="47" fill="url(#coinBr)" />
+                <circle cx="50" cy="50" r="47" :fill="`url(#coinBr-${c.id})`" />
+                <circle cx="50" cy="50" r="46" fill="none" stroke="#6e4617" stroke-width="2.2" opacity="0.8" />
                 <circle cx="50" cy="50" r="43" fill="none" stroke="#f8e7b8" stroke-width="1.6" opacity="0.7" />
                 <rect x="35" y="35" width="30" height="30" rx="4" fill="#2d1a05" />
+                <rect x="37" y="37" width="26" height="26" rx="3" fill="none" stroke="#d1a356" stroke-width="1" opacity="0.5" />
                 <rect x="35" y="35" width="30" height="30" rx="4" fill="none" stroke="#0f0800" stroke-width="1" stroke-opacity="0.8" />
                 <g font-family="var(--font-title)" fill="#3a2307" text-anchor="middle" font-size="17">
                   <text x="50" y="27" transform="rotate(0 50 30)">乾</text>
@@ -153,22 +155,24 @@ function clearAll() {
             <div class="coin3d__face coin3d__face--bei">
               <svg viewBox="0 0 100 100" class="coin3d__svg" aria-hidden="true">
                 <defs>
-                  <radialGradient id="coinBrB" cx="35%" cy="30%" r="85%">
+                  <radialGradient :id="`coinBrB-${c.id}`" cx="35%" cy="30%" r="85%">
                     <stop offset="0%" stop-color="#f5e3ad" />
                     <stop offset="45%" stop-color="#cfa049" />
                     <stop offset="80%" stop-color="#8a5c1f" />
                     <stop offset="100%" stop-color="#4d2f0b" />
                   </radialGradient>
                 </defs>
-                <circle cx="50" cy="50" r="47" fill="url(#coinBrB)" />
+                <circle cx="50" cy="50" r="47" :fill="`url(#coinBrB-${c.id})`" />
+                <circle cx="50" cy="50" r="46" fill="none" stroke="#6e4617" stroke-width="2.2" opacity="0.8" />
                 <circle cx="50" cy="50" r="43" fill="none" stroke="#f8e7b8" stroke-width="1.6" opacity="0.7" />
                 <rect x="35" y="35" width="30" height="30" rx="4" fill="#2d1a05" />
+                <rect x="37" y="37" width="26" height="26" rx="3" fill="none" stroke="#d1a356" stroke-width="1" opacity="0.5" />
                 <g font-family="var(--font-title)" fill="#3a2307" text-anchor="middle">
-                  <text x="50" y="54" font-size="26">背</text>
-                  <text x="50" y="30" font-size="8" fill="#6b4613">宝</text>
-                  <text x="70" y="56" font-size="8" fill="#6b4613">泉</text>
-                  <text x="50" y="78" font-size="8" fill="#6b4613">宝</text>
-                  <text x="30" y="56" font-size="8" fill="#6b4613">泉</text>
+                  <text x="50" y="54" font-size="19">寶泉</text>
+                  <circle cx="50" cy="30" r="2" fill="#6b4613" />
+                  <circle cx="70" cy="56" r="2" fill="#6b4613" />
+                  <circle cx="50" cy="78" r="2" fill="#6b4613" />
+                  <circle cx="30" cy="56" r="2" fill="#6b4613" />
                 </g>
               </svg>
             </div>
@@ -220,7 +224,7 @@ function clearAll() {
   background:
     radial-gradient(ellipse 90% 70% at 50% -10%, rgba(168, 132, 44, 0.16), transparent 60%),
     radial-gradient(ellipse 70% 50% at 50% 110%, rgba(176, 58, 46, 0.1), transparent 65%),
-    linear-gradient(175deg, #26211b, #171310 55%, #1c1713);
+    linear-gradient(175deg, #5a4030, #3d2b22 55%, #4a3427);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     inset 0 0 0 1px rgba(0, 0, 0, 0.35),
@@ -399,18 +403,18 @@ function clearAll() {
   animation: fly 720ms var(--d) var(--ease-drop) both;
 }
 @keyframes fly {
-  0% { transform: translateY(0) rotateX(6deg) rotateZ(0deg) rotateY(0deg); opacity: 0; }
+  0% { transform: translate3d(0, 24px, 0) rotateX(6deg) rotateZ(0deg) rotateY(0deg); opacity: 0; }
   8% { opacity: 1; }
-  35% { transform: translateY(-120px) rotateX(260deg) rotateZ(40deg) rotateY(120deg); }
-  60% { transform: translateY(-30px) rotateX(420deg) rotateZ(-30deg) rotateY(240deg); }
-  100% { transform: translateY(0) rotateX(480deg) rotateZ(24deg) rotateY(360deg); opacity: 1; }
+  35% { transform: translate3d(var(--drift), -128px, 0) rotateX(260deg) rotateZ(40deg) rotateY(120deg); }
+  60% { transform: translate3d(calc(var(--drift) * -0.5), -30px, 0) rotateX(420deg) rotateZ(-30deg) rotateY(240deg); }
+  100% { transform: translate3d(var(--drift), 0, 0) rotateX(480deg) rotateZ(24deg) rotateY(360deg); opacity: 1; }
 }
 .coin3d.is-landed .coin3d__inner {
   animation: settle 380ms var(--ease-drop) both;
 }
 @keyframes settle {
-  0% { transform: translateY(-16px) rotateX(520deg) rotateZ(24deg) rotateY(720deg); }
-  100% { transform: translateY(0) rotateY(var(--face, 0deg)) rotateX(0deg) rotateZ(12deg); }
+  0% { transform: translate3d(var(--drift), -16px, 0) rotateX(520deg) rotateZ(24deg) rotateY(720deg); }
+  100% { transform: translate3d(var(--drift), 0, 0) rotateY(var(--face, 0deg)) rotateX(0deg) rotateZ(calc(12deg + var(--spin))); }
 }
 
 .coin3d__face {

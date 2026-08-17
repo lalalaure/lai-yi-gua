@@ -37,11 +37,23 @@
   padding: 4px 6px;
   border-radius: 4px;
   border: 1.5px solid var(--cinnabar);
-  background: rgba(173, 46, 44, 0.08);
+  background: var(--state-selected);
   color: var(--cinnabar);
   font-family: var(--font-title);
   font-size: 12px;
   letter-spacing: 0.1em;
+}
+
+/* 所有可选控件共用同一套“当前”语言，避免只靠颜色判断。 */
+:where(.sex-btn, .mode__btn, .ask__chip, .intent, .method-card):focus-visible {
+  outline-offset: 3px;
+}
+:where(.sex-btn.is-on, .mode__btn.is-on, .ask__chip.is-on) {
+  box-shadow: inset 3px 0 0 var(--cinnabar);
+}
+
+.btn:disabled {
+  opacity: var(--state-disabled);
 }
 
 /* 墨线分隔 */

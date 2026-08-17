@@ -54,7 +54,7 @@ const labels = computed(() =>
 </script>
 
 <template>
-  <svg :viewBox="`0 0 ${SIZE} ${SIZE}`" class="radar" role="img" aria-label="五行力量雷达图">
+  <svg :viewBox="`0 0 ${SIZE} ${SIZE}`" class="radar" :class="{ 'is-in': inView }" role="img" aria-label="五行力量雷达图">
     <defs>
       <radialGradient id="radarFill">
         <stop offset="0%" stop-color="var(--cinnabar)" stop-opacity="0.34" />
@@ -103,8 +103,8 @@ const labels = computed(() =>
           class="radar__dotlabel"
           :style="{ fill: 'var(--cinnabar)' }"
         ></circle>
-        <text :x="a.x" :y="a.y + 18" text-anchor="middle" font-size="16" fill="var(--ink)">{{ a.label }}</text>
-        <text :x="a.x" :y="a.y + 34" text-anchor="middle" font-size="11.5" fill="var(--ink-soft)">{{ a.value }}</text>
+        <text :x="a.x" :y="a.y + 16" text-anchor="middle" font-size="15" fill="var(--ink)">{{ a.label }}</text>
+        <text :x="a.x" :y="a.y + 31" text-anchor="middle" font-size="11.5" fill="var(--ink-soft)">{{ a.value }} · {{ a.ratio >= 0.75 ? '旺' : a.ratio >= 0.4 ? '平' : '弱' }}</text>
       </g>
     </g>
   </svg>
@@ -120,7 +120,8 @@ const labels = computed(() =>
 .radar__grid line {
   fill: none;
   stroke: var(--line);
-  stroke-width: 1;
+  stroke-width: 0.8;
+  stroke-dasharray: 2 3;
 }
 .radar__glow {
   opacity: 0;
@@ -134,13 +135,14 @@ const labels = computed(() =>
   transform: scale(0.6);
   transform-origin: 50% 50%;
   transition: opacity 0.7s var(--ease-ink), transform 0.9s var(--ease-drop);
+  transform-box: fill-box;
 }
 .radar__data.is-in {
   opacity: 1;
   transform: none;
 }
 .radar__stroke {
-  stroke-width: 2;
+  stroke-width: 2.2;
   stroke-dasharray: 800;
   stroke-dashoffset: 800;
   transition: stroke-dashoffset 1.2s var(--ease-ink) 0.15s;
@@ -154,7 +156,7 @@ const labels = computed(() =>
 .radar__dot {
   fill: var(--cinnabar);
   stroke: #faf7f0;
-  stroke-width: 1.2;
+  stroke-width: 1.5;
 }
 .radar__halo {
   fill: none;

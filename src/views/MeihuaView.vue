@@ -479,9 +479,7 @@ function reset() {
   background: var(--ink);
 }
 .mini--yin {
-  background: transparent;
-  border-top: 4px solid var(--ink);
-  height: 0;
+  background: linear-gradient(to right, var(--ink) 0 40%, transparent 40% 60%, var(--ink) 60% 100%);
 }
 .tiyong__rel {
   display: flex;
